@@ -35,11 +35,11 @@ module.exports = function (env, webpackConfig) {
             new BrowserSyncPlugin({
                 // proxy: 'localhost:80',//要代理的端口
                 host: 'localhost',
-                port: 5000,
+                port: 5011,
                 server: { baseDir: ['build'] }
             }),
             new CopyWebpackPlugin([{
-                from: __dirname + '/demo/assets',
+                from: __dirname + '/src/assets',
                 to: __dirname + '/build/assets'
             }])
         ],
