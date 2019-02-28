@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Thursday, February 28th 2019, 11:48:01 pm
+ * Last Modified: Friday, March 1st 2019, 12:28:17 am
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 jiguang
@@ -51,8 +51,12 @@ export class BloodStrip extends Script<BloodStripInputs, AppPlugin> {
         container.addChild(plane);
         this.entity.addChild(container);
         this.plane = plane;
-        this.plane2 = plane2; container
+        this.plane2 = plane2;
         this.container = container;
+        this.entity.collision.on('collisionstart', (e) => {
+            console.log(e);
+            this.inputs.value -= 10;
+        });
     }
     update(dt) {
         this.container!.lookAt(this.inputs.camera.getPosition(), this.inputs.camera.up);

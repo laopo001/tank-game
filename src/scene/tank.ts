@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Thursday, February 28th 2019, 11:48:16 pm
+ * Last Modified: Friday, March 1st 2019, 1:18:57 am
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 jiguang
@@ -82,7 +82,21 @@ gltf.loadSenceRoot().then(node => {
     }).addComponent('script', [new BloodStrip({ value: 50, camera })]);
     entity.addChild(node);
     node.setLocalPosition(0, -1, 0);
+    entity.findByTag('model').forEach(x => {
+
+    });
+
     scene.root.addChild(entity);
 });
+
+document.getElementById('canvas')!.addEventListener('mousedown', (e) => {
+    let from = camera.camera.screenToWorld(e.x, e.y, camera.camera.instance.nearClip);
+    let to = camera.camera.screenToWorld(e.x, e.y, camera.camera.instance.farClip);
+    let result = scene.systems.rigidbody!.physics.raycastFirst(from, to);
+    if (result) {
+        let pickedEntity = result.entity;
+        console.log(pickedEntity.name);
+    }
+}, false);
 
 export { scene };

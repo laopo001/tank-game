@@ -47,14 +47,19 @@ export class FirstPersonCamera extends Script<FirstPersonCameraInputs, AppPlugin
             }
         }, false);
         // tslint:disable-next-line:no-non-null-assertion
-        document.getElementById('canvas')!.addEventListener('mousedown', (event) => {
-            if (!this.entity.scene.isActive) { return; }
-            if (!this.app.plugins.pointer.isPointerLocked) {
-                this.app.plugins.pointer.lock();
-            }
-        }, false);
+        // document.getElementById('canvas')!.addEventListener('mousedown', (event) => {
+        //     if (!this.entity.scene.isActive) { return; }
+        //     if (!this.app.plugins.pointer.isPointerLocked) {
+        //         this.app.plugins.pointer.lock();
+        //     }
+        // }, false);
         document.addEventListener('keydown', (event) => {
             if (!this.entity.scene.isActive) { return; }
+            if (event.key === 'f') {
+                if (!this.app.plugins.pointer.isPointerLocked) {
+                    this.app.plugins.pointer.lock();
+                }
+            }
             if (event.key === 'w') {
                 this.forwards = true;
             }
