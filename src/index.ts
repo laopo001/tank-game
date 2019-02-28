@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Thursday, February 28th 2019, 2:12:28 pm
+ * Last Modified: Thursday, February 28th 2019, 2:41:23 pm
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 jiguang
@@ -21,6 +21,8 @@ import { StatsPlugin } from 'hypergl/lib/plugins/stat';
 import { KeyPlugin } from 'hypergl/lib/plugins/key';
 
 const app = new Application<AppPlugin>(document.getElementById('canvas') as HTMLCanvasElement);
+console.log(app);
+
 app.registerPlugins([StatsPlugin, PointerPlugin, AmmoPlugin, GltfPlugin, KeyPlugin]);
 
 import('./scene/tank').then(module => {
