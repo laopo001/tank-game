@@ -7,7 +7,6 @@
     "module": "esnext",
     "importHelpers": true,
     "moduleResolution": "node",
-    "allowJs": true,
     "sourceMap": true,
     "declaration": true,
     "skipLibCheck": true,
@@ -30,8 +29,7 @@
       "./typings"
     ],
     "outDir": "lib",
-    "types": [
-    ],
+    "types": [],
     "allowSyntheticDefaultImports": true,
     // "baseUrl": "./",
     // "paths": {}

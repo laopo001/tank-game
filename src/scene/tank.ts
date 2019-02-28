@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Thursday, February 28th 2019, 6:02:56 pm
+ * Last Modified: Thursday, February 28th 2019, 9:32:04 pm
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 jiguang
@@ -14,7 +14,7 @@
 
 import { Entity, StandardMaterial, Config, event, Scene, util, SkyMaterial, Application, Vec3, Color, Picker, Texture, CubeTexture } from 'hypergl';
 import { AppPlugin } from '../types';
-
+import { FirstPersonCamera } from '../scripts'
 
 let app = Application.getApp<AppPlugin>().unwrap();
 
@@ -30,8 +30,7 @@ gltf.loadSenceRoot().then(node => {
         type: 'box',
         debugger: true,
         halfExtents: new Vec3(1, 1, 1),
-    })
-    .addComponent('rigidbody', {
+    }).addComponent('rigidbody', {
         type: 'dynamic',
         mass: 1
     });
@@ -79,6 +78,7 @@ let camera = new Entity('camera')
     })
     .setPosition(0, 5, 5)
     .lookAt(new Vec3(0, 0, 0))
+    .addComponent('script', [new FirstPersonCamera({ speed: 2 })]);
 scene.root.addChild(camera);
 
 export { scene };
