@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Thursday, February 28th 2019, 9:32:04 pm
+ * Last Modified: Thursday, February 28th 2019, 11:48:16 pm
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 jiguang
@@ -14,7 +14,7 @@
 
 import { Entity, StandardMaterial, Config, event, Scene, util, SkyMaterial, Application, Vec3, Color, Picker, Texture, CubeTexture } from 'hypergl';
 import { AppPlugin } from '../types';
-import { FirstPersonCamera } from '../scripts'
+import { FirstPersonCamera, BloodStrip } from '../scripts'
 
 let app = Application.getApp<AppPlugin>().unwrap();
 
@@ -25,17 +25,6 @@ let gltf = app.plugins.gltf.createLoader('./assets/models/CompleteTank.gltf');
 // let cubeTexture = CubeTexture.loadImage('assets/images/skybox_px.jpg', 'assets/images/skybox_nx.jpg', 'assets/images/skybox_py.jpg', 'assets/images/skybox_ny.jpg',
 //     'assets/images/skybox_pz.jpg', 'assets/images/skybox_nz.jpg');
 
-gltf.loadSenceRoot().then(node => {
-    node.addComponent('collision', {
-        type: 'box',
-        debugger: true,
-        halfExtents: new Vec3(1, 1, 1),
-    }).addComponent('rigidbody', {
-        type: 'dynamic',
-        mass: 1
-    });
-    scene.root.addChild(node);
-});
 
 let light = new Entity('light')
     .addComponent('light', {
@@ -80,5 +69,20 @@ let camera = new Entity('camera')
     .lookAt(new Vec3(0, 0, 0))
     .addComponent('script', [new FirstPersonCamera({ speed: 2 })]);
 scene.root.addChild(camera);
+
+gltf.loadSenceRoot().then(node => {
+    let entity = new Entity('tank');
+    entity.addComponent('collision', {
+        type: 'box',
+        // debugger: true,
+        halfExtents: new Vec3(1, 1, 1),
+    }).addComponent('rigidbody', {
+        type: 'dynamic',
+        mass: 1
+    }).addComponent('script', [new BloodStrip({ value: 50, camera })]);
+    entity.addChild(node);
+    node.setLocalPosition(0, -1, 0);
+    scene.root.addChild(entity);
+});
 
 export { scene };

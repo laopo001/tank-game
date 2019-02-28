@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Thursday, February 28th 2019, 9:29:09 pm
+ * Last Modified: Thursday, February 28th 2019, 11:09:02 pm
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 jiguang
@@ -13,3 +13,4 @@
 
 
 export * from './first_person_camera';
+export * from './blood_strip';
