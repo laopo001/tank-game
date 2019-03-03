@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Friday, March 1st 2019, 12:28:17 am
+ * Last Modified: Sunday, March 3rd 2019, 4:07:08 pm
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 jiguang
@@ -54,7 +54,9 @@ export class BloodStrip extends Script<BloodStripInputs, AppPlugin> {
         this.plane2 = plane2;
         this.container = container;
         this.entity.collision.on('collisionstart', (e) => {
-            console.log(e);
+            if (this.inputs.value < 10) {
+                return;
+            }
             this.inputs.value -= 10;
         });
     }
@@ -63,8 +65,14 @@ export class BloodStrip extends Script<BloodStripInputs, AppPlugin> {
         let plane2 = this.plane2!;
         // let scale = plane2.getLocalScale();
         // let position = plane2.getLocalPosition();
-        plane2.setLocalScale(0.9 * this.inputs.value / 100, 1, 0.9);
+        let scale = 0.9 * this.inputs.value / 100;
+        if (scale == 0) {
+            scale = 0.00001;
+            // this.entity.enabled = false;
+        }
+        plane2.setLocalScale(scale, 1, 0.9);
         plane2.setLocalPosition(1 * (1 - this.inputs.value / 100) / 2, 0.01, 0)
+
     }
     // tslint:disable-next-line:no-empty
     destroy() { }
