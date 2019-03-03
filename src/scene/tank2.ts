@@ -1,16 +1,15 @@
 /**
- * ProjectName: tank-game
- * FilePath: \src\scene\tank.ts
- * Created Date: Thursday, February 28th 2019, 2:02:23 pm
+ * File: c:\Users\35327\Githubs\tank-game\src\scene\tank2.ts
+ * Project: c:\Users\35327\Githubs\tank-game
+ * Created Date: Sunday, March 3rd 2019, 9:38:28 pm
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Sunday, March 3rd 2019, 9:40:15 pm
- * Modified By: liaodh
+ * Last Modified: Sunday, March 3rd 2019, 9:48:07 pm
+ * Modified By:
  * -----
  * Copyright (c) 2019 liaodh
  */
-
 
 
 import { Entity, StandardMaterial, Config, event, Scene, util, SkyMaterial, Application, Vec3, Color, Picker, Texture, CubeTexture, Quat } from 'hypergl';
@@ -115,7 +114,7 @@ async function main() {
         // console.log(allow.data);
         bullet.rigidbody.applyForce(new Vec3(0, 9.82, 0)).then(_ => {
             bullet.rigidbody.applyImpulse(allow);
-        })
+        });
 
     }, false);
 }
