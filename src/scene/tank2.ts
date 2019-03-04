@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Sunday, March 3rd 2019, 9:48:07 pm
+ * Last Modified: Tuesday, March 5th 2019, 12:24:59 am
  * Modified By:
  * -----
  * Copyright (c) 2019 liaodh
@@ -69,7 +69,7 @@ async function main() {
         .addComponent('script', [new FirstPersonCamera({ speed: 2 })]);
     scene.root.addChild(camera);
 
-    let gltf = app.plugins.gltf.createLoader('./assets/models/CompleteTank.gltf');
+    let gltf = app.plugins.gltf.createLoader('./assets/models/CompleteLevelArt.gltf');
     gltf.loadSenceRoot().then(node => {
         let entity = new Entity('tank');
         entity.addComponent('collision', {
@@ -88,35 +88,16 @@ async function main() {
         });
         scene.root.addChild(entity);
     });
+    scene.event.on('active', () => {
+        let picker = new Picker(scene);
+        document.getElementById('canvas')!.addEventListener('mousedown', async (e) => {
+            if (app.scene.name === 'tank') {
+                let entity = picker.pick(e.offsetX, e.offsetY);
+                console.log(entity.name);
+            }
+        }, false);
+    });
 
-    let gltf_bullet = app.plugins.gltf.createLoader('./assets/models/bullet.gltf');
-    let model_bulled = await gltf_bullet.loadMesh(0);
-    document.getElementById('canvas')!.addEventListener('mousedown', async (e) => {
-        let from = camera.camera.screenToWorld(e.offsetX, e.offsetY, camera.camera.instance.nearClip);
-        let to = camera.camera.screenToWorld(e.offsetX, e.offsetY, camera.camera.instance.farClip);
-
-        let bullet = new Entity({ tag: ['bullet'] }).addComponent('model', {
-            type: 'model',
-            // material: red,
-            model: model_bulled
-        }).addComponent('collision', {
-            type: 'box',
-            halfExtents: new Vec3(0.1, 0.1, 0.1)
-        }).addComponent('rigidbody', {
-            type: 'dynamic',
-            mass: 0.1
-        }).setPosition(from)
-            .lookAt(new Vec3().copy(to).scale(-1));
-        scene.root.addChild(bullet);
-
-        let allow = new Vec3().sub2(to, from).normalize();
-        allow.scale(3);
-        // console.log(allow.data);
-        bullet.rigidbody.applyForce(new Vec3(0, 9.82, 0)).then(_ => {
-            bullet.rigidbody.applyImpulse(allow);
-        });
-
-    }, false);
 }
 main();
 
