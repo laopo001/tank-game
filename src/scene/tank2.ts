@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Tuesday, March 5th 2019, 12:24:59 am
+ * Last Modified: Wednesday, March 13th 2019, 8:26:29 pm
  * Modified By:
  * -----
  * Copyright (c) 2019 liaodh
@@ -15,7 +15,7 @@
 import { Entity, StandardMaterial, Config, event, Scene, util, SkyMaterial, Application, Vec3, Color, Picker, Texture, CubeTexture, Quat } from 'hypergl';
 import { AppPlugin } from '../types';
 import { FirstPersonCamera, BloodStrip } from '../scripts'
-
+import { json } from './physics-data';
 let app = Application.getApp<AppPlugin>().unwrap();
 
 const scene = new Scene('tank');
@@ -69,24 +69,11 @@ async function main() {
         .addComponent('script', [new FirstPersonCamera({ speed: 2 })]);
     scene.root.addChild(camera);
 
-    let gltf = app.plugins.gltf.createLoader('./assets/models/CompleteLevelArt.gltf');
+    let gltf = app.plugins.gltf.createLoader('./assets/models/_Complete-Game.gltf');
     gltf.loadSenceRoot().then(node => {
-        let entity = new Entity('tank');
-        entity.addComponent('collision', {
-            type: 'box',
-            halfExtents: new Vec3(1, 1, 1),
-        }).addComponent('rigidbody', {
-            type: 'dynamic',
-            mass: 1
-        }).addComponent('script', [new BloodStrip({ value: 50, camera })]);
-        entity.addChild(node);
-        node.setLocalPosition(0, -1, 0);
-        entity.findByTag('model').forEach(x => {
-            x.model.instance.meshs.forEach(drawable => {
-                drawable.castShadow = true;
-            });
-        });
-        scene.root.addChild(entity);
+        scene.root.addChild(node);
+        scene.root.resolveJSON(json.root, true);
+        scene.root.enabled = true;
     });
     scene.event.on('active', () => {
         let picker = new Picker(scene);
