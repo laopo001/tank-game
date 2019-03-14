@@ -35,8 +35,6 @@ export class FirstPersonCamera extends Script<FirstPersonCameraInputs, AppPlugin
         this.ex = eulers.x;
         this.ey = eulers.y;
         this.ez = eulers.z;
-        // tslint:disable-next-line:one-variable-per-declaration
-        let x = 0, y = 0;
         // tslint:disable-next-line:no-non-null-assertion
         document.getElementById('canvas')!.addEventListener('mousemove', (event) => {
             if (!this.entity.scene.isActive) { return; }
@@ -103,6 +101,9 @@ export class FirstPersonCamera extends Script<FirstPersonCameraInputs, AppPlugin
     }
     update(dt) {
         // console.log(dt);
+        if (!this.app.plugins.pointer.isPointerLocked) {
+            return;
+        }
 
         this.entity.setLocalEulerAngles(this.ex, this.ey, this.ez);
 

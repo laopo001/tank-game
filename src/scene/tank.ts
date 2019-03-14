@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Tuesday, March 5th 2019, 12:22:28 am
+ * Last Modified: Wednesday, March 13th 2019, 10:28:36 pm
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 liaodh
@@ -20,6 +20,9 @@ import { FirstPersonCamera, BloodStrip } from '../scripts'
 let app = Application.getApp<AppPlugin>().unwrap();
 
 const scene = new Scene('tank');
+
+console.log(123);
+
 
 async function main() {
     // let cubeTexture = CubeTexture.loadImage('assets/images/skybox_px.jpg', 'assets/images/skybox_nx.jpg', 'assets/images/skybox_py.jpg', 'assets/images/skybox_ny.jpg',
