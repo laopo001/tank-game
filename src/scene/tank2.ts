@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Wednesday, March 13th 2019, 11:51:41 pm
+ * Last Modified: Thursday, March 14th 2019, 11:03:50 pm
  * Modified By:
  * -----
  * Copyright (c) 2019 liaodh
@@ -121,7 +121,7 @@ async function main() {
             type: 'box',
             halfExtents: new Vec3(0.1, 0.1, 0.1)
         }).addComponent('rigidbody', {
-            type: 'dynamic',
+            type: 'kinematic',
             mass: 0.1
         }).setPosition(from)
             .lookAt(new Vec3().copy(to).scale(-1));
