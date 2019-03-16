@@ -5,16 +5,16 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Wednesday, March 13th 2019, 11:25:00 pm
+ * Last Modified: Saturday, March 16th 2019, 1:43:53 am
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 liaodh
  */
 
-
-import { math, Script } from 'hypergl';
+import { math, Script, Vec3 } from 'hypergl';
 import { AppPlugin } from '../types';
 
+let id = 0;
 export interface PlayerScriptInputs {
     speed: number;
 }
@@ -31,7 +31,7 @@ export class PlayerScript extends Script<PlayerScriptInputs, AppPlugin> {
         let eulers = this.entity.getLocalEulerAngles();
         this.ey = eulers.y;
         // tslint:disable-next-line:one-variable-per-declaration
-        let x = 0, y = 0;
+
 
         document.addEventListener('keydown', (event) => {
             if (!this.entity.scene.isActive) { return; }
@@ -46,6 +46,12 @@ export class PlayerScript extends Script<PlayerScriptInputs, AppPlugin> {
             }
             if (event.key === 'd') {
                 this.right = true;
+            }
+            if (event.key === 'q') {
+                this.entity.scene.setActiveCamera(2);
+            }
+            if (event.key === 'e') {
+                this.entity.scene.setActiveCamera(0);
             }
         }, false);
         document.addEventListener('keyup', (event) => {
@@ -66,20 +72,44 @@ export class PlayerScript extends Script<PlayerScriptInputs, AppPlugin> {
         }, false);
     }
     update(dt) {
-        // console.log(dt);
-
+        let d = 0.05;
         if (this.forwards) {
-            this.entity.translateLocal(0, 0, this.inputs.speed * dt);
+            // this.entity.translateLocal(0, 0, this.inputs.speed * dt);
+            // this.check();
+            let position = new Vec3();
+            if (this.left) {
+                position.set(d, 0, 0);
+            }
+            if (this.right) {
+                position.set(-d, 0, 0);
+            }
+            this.entity.rigidbody.applyForce(this.entity.forward, position)
         } else if (this.backwards) {
-            this.entity.translateLocal(0, 0, -this.inputs.speed * dt);
+            let position = new Vec3();
+            if (this.left) {
+                position.set(d, 0, 0);
+            }
+            if (this.right) {
+                position.set(-d, 0, 0);
+            }
+            this.entity.rigidbody.applyForce(this.entity.forward.scale(-1), position)
+
         }
 
         if (this.left) {
             this.entity.setLocalEulerAngles(0, this.ey += 2, 0);
+            this.check();
         } else if (this.right) {
             this.entity.setLocalEulerAngles(0, this.ey -= 2, 0);
+            this.check();
         }
 
+    }
+    check() {
+        if (0 === 0) {
+            let physics = this.entity.scene.systems.rigidbody!.physics;
+            physics.syncEntityToBody(this.entity, this.entity.rigidbody.body);
+        }
     }
     // tslint:disable-next-line:no-empty
     destroy() { }
