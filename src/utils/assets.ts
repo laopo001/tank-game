@@ -5,15 +5,17 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Wednesday, March 13th 2019, 9:19:08 pm
+ * Last Modified: Saturday, March 16th 2019, 4:08:07 pm
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 liaodh
  */
 
-export class AssetsLoader {
-    obj = {};
-    static async loadAssets(obj: { [s: string]: Promise<any> }) {
+type UnpackedPromise<T> = T extends Promise<infer U> ? U : never;
+
+export class AssetsLoader<T> {
+    private obj = {} as any;
+    static async loadAssets<T extends { [s: string]: Promise<any> }>(obj: T) {
         let arr: Array<Promise<any>> = [];
         let map = {} as any;
         let i = 0;
@@ -22,7 +24,7 @@ export class AssetsLoader {
             map[i++] = x;
         }
         let x = await Promise.all(arr);
-        let loader = new AssetsLoader();
+        let loader = new AssetsLoader<T>();
         x.forEach((x, i) => {
             loader.set(map[i], x);
         })
@@ -31,19 +33,7 @@ export class AssetsLoader {
     private set(name: string, p: any) {
         this.obj[name] = p;
     }
-    get<T= any>(name: string): T {
+    get<K extends keyof T>(name: K): UnpackedPromise<T[K]> {
         return this.obj[name];
     }
-}
-
-export async function loadAssets(obj: { [s: string]: Promise<any> }) {
-    let arr: Array<Promise<any>> = [];
-    let map = {} as any;
-    let i = 0;
-    for (let x in obj) {
-        arr.push(obj[x]);
-        map[x] = i++;
-    }
-    let x = await Promise.all(arr);
-
 }

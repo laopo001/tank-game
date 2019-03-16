@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Wednesday, March 13th 2019, 10:28:36 pm
+ * Last Modified: Saturday, March 16th 2019, 2:37:03 pm
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 liaodh
@@ -114,9 +114,9 @@ async function main() {
         scene.root.addChild(bullet);
 
         let allow = new Vec3().sub2(to, from).normalize().scale(3);
-        bullet.rigidbody.applyForce(new Vec3(0, 9.82, 0)).then(_ => {
-            bullet.rigidbody.applyImpulse(allow);
-        })
+
+        bullet.rigidbody.applyImpulse(allow);
+
 
     }, false);
 }

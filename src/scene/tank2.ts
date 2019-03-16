@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Saturday, March 16th 2019, 1:48:30 am
+ * Last Modified: Saturday, March 16th 2019, 4:05:46 pm
  * Modified By:
  * -----
  * Copyright (c) 2019 liaodh
@@ -55,26 +55,22 @@ async function main() {
         .addComponent('script', [new FirstPersonCamera({ speed: 2 })]);
     scene.root.addChild(camera);
 
-
-
     let loader = await AssetsLoader.loadAssets({
         scene: app.plugins.gltf.createLoader('./assets/models/_Complete-Game.gltf').loadSenceRoot(),
         tank: app.plugins.gltf.createLoader('./assets/models/CompleteTank.gltf').loadSenceRoot(),
-        model_bulled: app.plugins.gltf.createLoader('./assets/models/_Complete-Game.gltf').loadMesh(0)
+        model_bulled: app.plugins.gltf.createLoader('./assets/models/bullet.gltf').loadMesh(0)
     });
-    let node = loader.get<Entity>('scene');
+    let node = loader.get('scene');
+
     node.setLocalScale(0.11, 0.11, 0.11);
     scene.root.addChild(node);
     scene.root.resolveJSON(json.root, true);
     scene.root.enabled = true;
 
-    let node2 = loader.get<Entity>('tank');
+    let node2 = loader.get('tank');
     scene.root.addChild(node2);
 
     let camera2 = new Entity('camera2')
-        // .addComponent('model', {
-        //     type: 'box',
-        // })
         .addComponent('camera', {
             type: 'perspective',
             perspective: {
@@ -98,7 +94,7 @@ async function main() {
         mass: 0.1,
     }).addComponent('script', [
         new BloodStrip({ value: 50, camera }),
-        new PlayerScript({ speed: 1 })
+        new PlayerScript({ speed: 1, model: loader.get('model_bulled') })
     ]);
     tank.setPosition(0, 2, 0).setLocalScale(0.25, 0.25, 0.25);
     tank.addChild(node2);
