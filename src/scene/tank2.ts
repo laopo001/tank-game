@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Saturday, March 16th 2019, 4:05:46 pm
+ * Last Modified: Saturday, March 16th 2019, 5:55:02 pm
  * Modified By:
  * -----
  * Copyright (c) 2019 liaodh
@@ -18,13 +18,12 @@ import { AppPlugin } from '../types';
 import { FirstPersonCamera, BloodStrip, PlayerScript } from '../scripts';
 import { json } from './physics-data';
 import { AssetsLoader } from '../utils/assets';
+import { AmmoPlugin } from 'hypergl/lib/plugins/physics';
 let app = Application.getApp<AppPlugin>().unwrap();
 
-const scene = new Scene('tank');
+export const scene = new Scene('tank').initialize(AmmoPlugin).then(main)
 
-
-
-async function main() {
+async function main(scene: Scene) {
     const red = new StandardMaterial();
     red.diffuseColor = new Color(1, 0, 0);
 
@@ -181,7 +180,5 @@ async function main() {
         }
 
     }, false);
+    return scene;
 }
-main();
-
-export { scene };

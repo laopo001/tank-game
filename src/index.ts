@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Saturday, March 16th 2019, 1:07:16 am
+ * Last Modified: Sunday, March 17th 2019, 4:54:30 pm
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 liaodh
@@ -16,18 +16,18 @@ import { Application } from 'hypergl';
 import { AppPlugin } from './types';
 import { GltfPlugin } from 'hypergl/lib/plugins/load';
 import { PointerPlugin } from 'hypergl/lib/plugins/pointer';
-import { AmmoPlugin } from 'hypergl/lib/plugins/physics';
 import { StatsPlugin } from 'hypergl/lib/plugins/stat';
 import { KeyPlugin } from 'hypergl/lib/plugins/key';
 
 const app = new Application<AppPlugin>(document.getElementById('canvas') as HTMLCanvasElement);
 console.log(app);
 
-app.registerPlugins([StatsPlugin, PointerPlugin, AmmoPlugin, GltfPlugin, KeyPlugin]);
+app.registerPlugins([StatsPlugin, PointerPlugin, GltfPlugin, KeyPlugin]);
 
-import('./scene/tank2').then(module => {
-    if (!module.scene.isRegistered) {
-        app.addScene(module.scene);
+import('./scene/tank').then(async module => {
+    let scene = await module.scene;
+    if (!scene.isRegistered) {
+        app.addScene(scene);
     }
     app.setActiveScene('tank')
     app.start();

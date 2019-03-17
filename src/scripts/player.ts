@@ -5,13 +5,13 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Saturday, March 16th 2019, 4:00:26 pm
+ * Last Modified: Sunday, March 17th 2019, 2:26:59 pm
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 liaodh
  */
 
-import { math, Script, Vec3, Model } from 'hypergl';
+import { math, Script, Vec3, Model, Entity } from 'hypergl';
 import { AppPlugin } from '../types';
 
 let id = 0;
@@ -32,14 +32,15 @@ export class PlayerScript extends Script<PlayerScriptInputs, AppPlugin> {
     update(dt) {
         let d = 0.1;
         if (this.app.plugins.key.KeyW) {
-            // this.entity.translateLocal(0, 0, this.inputs.speed * dt);
-            // this.check();
-            let position = new Vec3();
-            this.entity.rigidbody.applyForce(this.entity.forward, position)
+            this.entity.translateLocal(0, 0, this.inputs.speed * dt);
+            this.check();
+            // let position = new Vec3();
+            // this.entity.rigidbody.applyForce(this.entity.forward, position)
         } else if (this.app.plugins.key.KeyS) {
-            let position = new Vec3();
-            this.entity.rigidbody.applyForce(this.entity.forward.scale(-1), position)
-
+            this.entity.translateLocal(0, 0, -this.inputs.speed * dt);
+            this.check();
+            // let position = new Vec3();
+            // this.entity.rigidbody.applyForce(this.entity.forward.scale(-1), position)
         }
 
         if (this.app.plugins.key.KeyA) {
@@ -50,8 +51,24 @@ export class PlayerScript extends Script<PlayerScriptInputs, AppPlugin> {
             this.check();
         }
 
-        if (this.app.plugins.key.isPressed('Space' as any)) {
-            console.log(123);
+        if (this.app.plugins.key.isPressed('Space')) {
+            let bullet = new Entity({ tag: ['bullet'] }).addComponent('model', {
+                type: 'model',
+                // material: red,
+                model: this.inputs.model
+            }).addComponent('collision', {
+                type: 'box',
+                // debugger: true,
+                halfExtents: new Vec3(0.1, 0.1, 0.1)
+            }).addComponent('rigidbody', {
+                type: 'dynamic',
+                mass: 0.1
+            }).setPosition(this.entity.getPosition())
+
+            this.entity.scene.root.addChild(bullet);
+            console.log(bullet);
+
+            bullet.rigidbody.applyImpulse(this.entity.forward);
         }
         if (this.app.plugins.key.isPressed('KeyQ')) {
             this.entity.scene.setActiveCamera(2);

@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Saturday, March 16th 2019, 3:35:07 pm
+ * Last Modified: Sunday, March 17th 2019, 10:14:51 pm
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 liaodh
@@ -13,7 +13,6 @@
 
 
 interface Promise<T> {
-    value: T;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
