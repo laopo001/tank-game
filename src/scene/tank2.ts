@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Saturday, March 16th 2019, 5:55:02 pm
+ * Last Modified: Monday, March 18th 2019, 1:11:23 am
  * Modified By:
  * -----
  * Copyright (c) 2019 liaodh
@@ -21,6 +21,7 @@ import { AssetsLoader } from '../utils/assets';
 import { AmmoPlugin } from 'hypergl/lib/plugins/physics';
 let app = Application.getApp<AppPlugin>().unwrap();
 
+let debug = false;
 export const scene = new Scene('tank').initialize(AmmoPlugin).then(main)
 
 async function main(scene: Scene) {
@@ -63,7 +64,7 @@ async function main(scene: Scene) {
 
     node.setLocalScale(0.11, 0.11, 0.11);
     scene.root.addChild(node);
-    scene.root.resolveJSON(json.root, true);
+    scene.root.resolveJSON(json.root, debug);
     scene.root.enabled = true;
 
     let node2 = loader.get('tank');
@@ -85,7 +86,7 @@ async function main(scene: Scene) {
     let tank = new Entity('tank');
     tank.addComponent('collision', {
         type: 'box',
-        debugger: true,
+        debugger: debug,
         center: new Vec3(0, 0.25, 0),
         halfExtents: new Vec3(0.25, 0.25, 0.25),
     }).addComponent('rigidbody', {
@@ -112,7 +113,7 @@ async function main(scene: Scene) {
         })
         .addComponent('collision', {
             type: 'box',
-            debugger: true,
+            debugger: debug,
             halfExtents: new Vec3(5, 1, 5),
             center: new Vec3(0, -0.5, 0)
         })
@@ -127,7 +128,7 @@ async function main(scene: Scene) {
     scene.root.addChild(new Entity()
         .addComponent('collision', {
             type: 'box',
-            debugger: true,
+            debugger: debug,
             halfExtents: new Vec3(1, 5, 5),
         })
         .addComponent('rigidbody', {
@@ -138,7 +139,7 @@ async function main(scene: Scene) {
     scene.root.addChild(new Entity()
         .addComponent('collision', {
             type: 'box',
-            debugger: true,
+            debugger: debug,
             halfExtents: new Vec3(1, 5, 5),
         })
         .addComponent('rigidbody', {
@@ -149,7 +150,7 @@ async function main(scene: Scene) {
     scene.root.addChild(new Entity()
         .addComponent('collision', {
             type: 'box',
-            debugger: true,
+            debugger: debug,
             halfExtents: new Vec3(5, 5, 1),
         })
         .addComponent('rigidbody', {
@@ -160,7 +161,7 @@ async function main(scene: Scene) {
     scene.root.addChild(new Entity()
         .addComponent('collision', {
             type: 'box',
-            debugger: true,
+            debugger: debug,
             halfExtents: new Vec3(5, 5, 1),
         })
         .addComponent('rigidbody', {

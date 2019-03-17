@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/laopo001/tank-game#readme",
   "dependencies": {
-    "hypergl": "^0.0.1-nightly.20190316.0"
+    "hypergl": "^0.0.1-nightly.20190318.1"
   },
   "devDependencies": {
     "@types/node": "^11.9.5",

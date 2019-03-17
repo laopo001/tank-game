@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Sunday, March 17th 2019, 2:26:59 pm
+ * Last Modified: Monday, March 18th 2019, 1:09:39 am
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 liaodh
@@ -52,6 +52,7 @@ export class PlayerScript extends Script<PlayerScriptInputs, AppPlugin> {
         }
 
         if (this.app.plugins.key.isPressed('Space')) {
+            let { x, y, z } = this.entity.getPosition();
             let bullet = new Entity({ tag: ['bullet'] }).addComponent('model', {
                 type: 'model',
                 // material: red,
@@ -63,7 +64,7 @@ export class PlayerScript extends Script<PlayerScriptInputs, AppPlugin> {
             }).addComponent('rigidbody', {
                 type: 'dynamic',
                 mass: 0.1
-            }).setPosition(this.entity.getPosition())
+            }).setPosition(x, y + 0.3, z).setLocalScale(0.3, .3, .3).lookAt(this.entity.forward.scale(-1))
 
             this.entity.scene.root.addChild(bullet);
             console.log(bullet);

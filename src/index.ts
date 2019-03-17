@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Sunday, March 17th 2019, 4:54:30 pm
+ * Last Modified: Monday, March 18th 2019, 1:06:12 am
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 liaodh
@@ -24,7 +24,7 @@ console.log(app);
 
 app.registerPlugins([StatsPlugin, PointerPlugin, GltfPlugin, KeyPlugin]);
 
-import('./scene/tank').then(async module => {
+import('./scene/tank2').then(async module => {
     let scene = await module.scene;
     if (!scene.isRegistered) {
         app.addScene(scene);
