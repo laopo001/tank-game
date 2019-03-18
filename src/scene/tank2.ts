@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Monday, March 18th 2019, 8:49:49 pm
+ * Last Modified: Tuesday, March 19th 2019, 1:25:14 am
  * Modified By:
  * -----
  * Copyright (c) 2019 liaodh
@@ -68,7 +68,7 @@ async function main(scene: Scene) {
     scene.root.enabled = true;
 
     let node2 = loader.get('tank');
-    scene.root.addChild(node2);
+    // scene.root.addChild(node2);
 
     let camera2 = new Entity('camera2')
         .addComponent('camera', {
@@ -121,7 +121,7 @@ async function main(scene: Scene) {
             new PlayerScript({ speed: 1, model: loader.get('model_bulled'), op: false })
         ]);
         tank.setPosition(math.random(-2, 2), 2, math.random(-2, 2)).setLocalScale(0.25, 0.25, 0.25);
-        tank.addChild(node2);
+        tank.addChild(node2.clone());
         tank.findByTag('model').forEach(x => {
             x.model.instance.meshs.forEach(drawable => {
                 drawable.castShadow = true;
