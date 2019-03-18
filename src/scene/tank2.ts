@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Monday, March 18th 2019, 1:11:23 am
+ * Last Modified: Monday, March 18th 2019, 8:49:49 pm
  * Modified By:
  * -----
  * Copyright (c) 2019 liaodh
@@ -13,7 +13,7 @@
 
 
 
-import { Entity, StandardMaterial, Config, event, Scene, util, SkyMaterial, Application, Vec3, Color, Picker, Texture, CubeTexture, Quat } from 'hypergl';
+import { Entity, StandardMaterial, Config, event, Scene, util, SkyMaterial, Application, Vec3, Color, Picker, math, Texture, CubeTexture, Quat } from 'hypergl';
 import { AppPlugin } from '../types';
 import { FirstPersonCamera, BloodStrip, PlayerScript } from '../scripts';
 import { json } from './physics-data';
@@ -94,7 +94,7 @@ async function main(scene: Scene) {
         mass: 0.1,
     }).addComponent('script', [
         new BloodStrip({ value: 50, camera }),
-        new PlayerScript({ speed: 1, model: loader.get('model_bulled') })
+        new PlayerScript({ speed: 1, model: loader.get('model_bulled'), op: true })
     ]);
     tank.setPosition(0, 2, 0).setLocalScale(0.25, 0.25, 0.25);
     tank.addChild(node2);
@@ -105,6 +105,33 @@ async function main(scene: Scene) {
     });
     scene.root.addChild(camera2);
     scene.root.addChild(tank);
+
+    function createEnemy() {
+        let tank = new Entity('tank-enemy');
+        tank.addComponent('collision', {
+            type: 'box',
+            debugger: debug,
+            center: new Vec3(0, 0.25, 0),
+            halfExtents: new Vec3(0.25, 0.25, 0.25),
+        }).addComponent('rigidbody', {
+            type: 'dynamic',
+            mass: 0.1,
+        }).addComponent('script', [
+            new BloodStrip({ value: 50, camera }),
+            new PlayerScript({ speed: 1, model: loader.get('model_bulled'), op: false })
+        ]);
+        tank.setPosition(math.random(-2, 2), 2, math.random(-2, 2)).setLocalScale(0.25, 0.25, 0.25);
+        tank.addChild(node2);
+        tank.findByTag('model').forEach(x => {
+            x.model.instance.meshs.forEach(drawable => {
+                drawable.castShadow = true;
+            });
+        });
+        scene.root.addChild(tank);
+    }
+    createEnemy();
+    createEnemy();
+    createEnemy();
 
     let plane = new Entity('plane')
         .addComponent('model', {

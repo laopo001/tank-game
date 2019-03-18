@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Sunday, March 3rd 2019, 9:40:15 pm
+ * Last Modified: Monday, March 18th 2019, 8:15:56 pm
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 liaodh
@@ -54,7 +54,7 @@ export class BloodStrip extends Script<BloodStripInputs, AppPlugin> {
         this.plane2 = plane2;
         this.container = container;
         this.entity.collision.on('collisionstart', (e) => {
-            if (this.inputs.value < 10) {
+            if (this.inputs.value < 10 || !e.other.tag.includes('bullet')) {
                 return;
             }
             this.inputs.value -= 10;

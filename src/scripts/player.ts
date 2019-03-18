@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Monday, March 18th 2019, 1:09:39 am
+ * Last Modified: Monday, March 18th 2019, 8:48:48 pm
  * Modified By: liaodh
  * -----
  * Copyright (c) 2019 liaodh
@@ -14,10 +14,10 @@
 import { math, Script, Vec3, Model, Entity } from 'hypergl';
 import { AppPlugin } from '../types';
 
-let id = 0;
 export interface PlayerScriptInputs {
     speed: number;
-    model: Model
+    model: Model;
+    op: boolean;
 }
 export class PlayerScript extends Script<PlayerScriptInputs, AppPlugin> {
     static defaultInputs = {
@@ -30,17 +30,15 @@ export class PlayerScript extends Script<PlayerScriptInputs, AppPlugin> {
         this.ey = eulers.y;
     }
     update(dt) {
-        let d = 0.1;
+        if (!this.inputs.op) {
+            return;
+        }
         if (this.app.plugins.key.KeyW) {
             this.entity.translateLocal(0, 0, this.inputs.speed * dt);
             this.check();
-            // let position = new Vec3();
-            // this.entity.rigidbody.applyForce(this.entity.forward, position)
         } else if (this.app.plugins.key.KeyS) {
             this.entity.translateLocal(0, 0, -this.inputs.speed * dt);
             this.check();
-            // let position = new Vec3();
-            // this.entity.rigidbody.applyForce(this.entity.forward.scale(-1), position)
         }
 
         if (this.app.plugins.key.KeyA) {
@@ -50,26 +48,8 @@ export class PlayerScript extends Script<PlayerScriptInputs, AppPlugin> {
             this.entity.setLocalEulerAngles(0, this.ey -= 2, 0);
             this.check();
         }
-
         if (this.app.plugins.key.isPressed('Space')) {
-            let { x, y, z } = this.entity.getPosition();
-            let bullet = new Entity({ tag: ['bullet'] }).addComponent('model', {
-                type: 'model',
-                // material: red,
-                model: this.inputs.model
-            }).addComponent('collision', {
-                type: 'box',
-                // debugger: true,
-                halfExtents: new Vec3(0.1, 0.1, 0.1)
-            }).addComponent('rigidbody', {
-                type: 'dynamic',
-                mass: 0.1
-            }).setPosition(x, y + 0.3, z).setLocalScale(0.3, .3, .3).lookAt(this.entity.forward.scale(-1))
-
-            this.entity.scene.root.addChild(bullet);
-            console.log(bullet);
-
-            bullet.rigidbody.applyImpulse(this.entity.forward);
+            this.fire();
         }
         if (this.app.plugins.key.isPressed('KeyQ')) {
             this.entity.scene.setActiveCamera(2);
@@ -77,6 +57,25 @@ export class PlayerScript extends Script<PlayerScriptInputs, AppPlugin> {
         if (this.app.plugins.key.isPressed('KeyE')) {
             this.entity.scene.setActiveCamera(0);
         }
+    }
+    fire() {
+        let temp = new Entity().setLocalPosition(0.0, 0.2, 2);
+        this.entity.addChild(temp)
+        let { x, y, z } = this.entity.getPosition();
+
+        let bullet = new Entity({ tag: ['bullet'] }).addComponent('model', {
+            type: 'model',
+            model: this.inputs.model
+        }).addComponent('collision', {
+            type: 'box',
+            halfExtents: new Vec3(0.1, 0.1, 0.1)
+        }).addComponent('rigidbody', {
+            type: 'dynamic',
+            mass: 0.1
+        }).setPosition(temp.getPosition()).setLocalScale(0.3, .3, .3).lookAt(this.entity.forward.scale(-1))
+
+        this.entity.scene.root.addChild(bullet);
+        bullet.rigidbody.applyImpulse(this.entity.forward);
     }
     check() {
         if (0 === 0) {
