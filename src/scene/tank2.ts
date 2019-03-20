@@ -5,7 +5,7 @@
  * @author: liaodh
  * @summary: short description for the file
  * -----
- * Last Modified: Tuesday, March 19th 2019, 1:25:14 am
+ * Last Modified: Wednesday, March 20th 2019, 11:52:20 pm
  * Modified By:
  * -----
  * Copyright (c) 2019 liaodh
@@ -22,7 +22,11 @@ import { AmmoPlugin } from 'hypergl/lib/plugins/physics';
 let app = Application.getApp<AppPlugin>().unwrap();
 
 let debug = false;
-export const scene = new Scene('tank').initialize(AmmoPlugin).then(main)
+export const scene = new Scene('tank').initialize(AmmoPlugin).then(main);
+let container = document.getElementById('container')!;
+let div = document.createElement('div');
+div.innerText = 'W，A，S，D 方向键，Space开火，F切换第一人称，Q，E切换照相机';
+container.appendChild(div);
 
 async function main(scene: Scene) {
     const red = new StandardMaterial();
@@ -32,7 +36,7 @@ async function main(scene: Scene) {
     let light = new Entity('light')
         .addComponent('light', {
             type: 'directional',
-            castShadows: true,
+            // castShadows: true,
             shadowType: 'PCF',
             range: 16
         })
