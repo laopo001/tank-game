@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack --config webpack.config.js --colors --watch",
+    "build": "webpack --config webpack.config.js --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
