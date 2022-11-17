@@ -1,0 +1,37 @@
+{
+  "name": "tank-game",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --config webpack.config.js --colors --watch",
+    "build": "webpack --config webpack.config.js --colors",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laopo001/tank-game.git"
+  },
+  "author": "ldh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laopo001/tank-game/issues"
+  },
+  "homepage": "https://github.com/laopo001/tank-game#readme",
+  "dependencies": {
+    "hypergl": "^0.0.1-nightly.20190320.2",
+    "tslib": "^2.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^11.9.5",
+    "browser-sync": "^2.26.3",
+    "browser-sync-webpack-plugin": "^2.2.2",
+    "cache-loader": "^2.0.1",
+    "copy-webpack-plugin": "^5.0.0",
+    "thread-loader": "^2.1.2",
+    "ts-loader": "^5.3.3",
+    "typescript": "3",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3"
+  }
+}
